@@ -5,7 +5,7 @@ intended to be an _almost_ drop in replacement for lhecker's amazing
 [argon2](https://github.com/lhecker/argon2) library.
 
 ## Usage
-See [examples/example.go](./examples/example.go) for a simple introduction and 
+See [_example/example.go](./_example/example.go) for a simple introduction and 
 try it out with:
 
 ```
