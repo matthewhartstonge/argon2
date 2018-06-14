@@ -31,4 +31,4 @@
 
 [[ constraint ]]
   name = "golang.org/x/crypto"
-  revision = "ae8bce0030810cf999bb2b9868ae5c7c58e6343b"
+  branch = "master"

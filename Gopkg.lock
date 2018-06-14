@@ -2,12 +2,13 @@
 
 
 [[projects]]
+  branch = "master"
   name = "golang.org/x/crypto"
   packages = [
     "argon2",
     "blake2b"
   ]
-  revision = "ae8bce0030810cf999bb2b9868ae5c7c58e6343b"
+  revision = "37a17fe027db43f76fd88b056ddf588563fc8722"
 
 [[projects]]
   branch = "master"
@@ -18,6 +19,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f4d45a9919d958465a6003ed8d2248bd8582d187b9bbb422978e20ac20965df1"
+  inputs-digest = "b3f56b200324e027b243c45e441f8d4cf4a7630a1e68b9024fa30acadd4ec36a"
   solver-name = "gps-cdcl"
   solver-version = 1
