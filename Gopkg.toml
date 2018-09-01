@@ -25,6 +25,10 @@
 #   unused-packages = true
 
 
+ignored = [
+  "github.com/lhecker/argon2"
+]
+
 [prune]
   go-tests = true
   unused-packages = true

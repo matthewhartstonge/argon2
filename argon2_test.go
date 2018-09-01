@@ -2,20 +2,40 @@
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-package argon2
+package argon2_test
 
 import (
 	"bytes"
 	"reflect"
 	"testing"
+
+	nativeArgonBindings "github.com/lhecker/argon2"
+	"github.com/matthewhartstonge/argon2"
 )
 
 var (
-	CFG     = DefaultConfig()
-	PWD     = []byte("password")
-	SALT    = []byte("saltsalt")
-	HASH    = []byte{0x96, 0x5b, 0xd4, 0x76, 0xaa, 0x7a, 0xf7, 0x2d, 0x91, 0x07, 0xad, 0xbd, 0x74, 0x2b, 0x86, 0xe3, 0x69, 0x11, 0xe7, 0x2f, 0x8e, 0x71, 0xcf, 0xf3, 0x88, 0xa5, 0x79, 0x92, 0x7d, 0xeb, 0x48, 0xe3}
-	ENCODED = []byte("$argon2i$v=19$m=4096,t=3,p=1$c2FsdHNhbHQ$llvUdqp69y2RB629dCuG42kR5y+Occ/ziKV5kn3rSOM")
+	config = argon2.Config{
+		HashLength:  32,
+		SaltLength:  16,
+		TimeCost:    1,
+		MemoryCost:  32 * 1024,
+		Parallelism: 1,
+		Mode:        argon2.ModeArgon2id,
+		Version:     argon2.Version13,
+	}
+	nativeArgonBindingsConfig = nativeArgonBindings.Config{
+		HashLength:  32,
+		SaltLength:  16,
+		TimeCost:    1,
+		MemoryCost:  32 * 1024,
+		Parallelism: 1,
+		Mode:        nativeArgonBindings.ModeArgon2id,
+		Version:     nativeArgonBindings.Version13,
+	}
+	password        = []byte("password")
+	salt            = []byte("saltsalt")
+	expectedHash    = []byte{139, 118, 66, 92, 63, 17, 51, 11, 184, 106, 68, 37, 211, 16, 139, 244, 189, 217, 38, 53, 116, 148, 139, 173, 176, 3, 182, 239, 235, 210, 75, 155}
+	expectedEncoded = []byte("$argon2id$v=19$m=32768,t=1,p=1$c2FsdHNhbHQ$i3ZCXD8RMwu4akQl0xCL9L3ZJjV0lIutsAO27+vSS5s")
 )
 
 func isFalsey(obj interface{}) bool {
@@ -42,7 +62,7 @@ func mustBeTruthy(t *testing.T, name string, obj interface{}) {
 }
 
 func TestHashRaw(t *testing.T) {
-	r, err := CFG.HashRaw(PWD)
+	r, err := config.HashRaw(password)
 	mustBeTruthy(t, "r.Config", r.Config)
 	mustBeTruthy(t, "r.Salt", r.Salt)
 	mustBeTruthy(t, "r.Hash", r.Hash)
@@ -50,7 +70,7 @@ func TestHashRaw(t *testing.T) {
 }
 
 func TestHashEncoded(t *testing.T) {
-	enc, err := CFG.HashEncoded(PWD)
+	enc, err := config.HashEncoded(password)
 	mustBeTruthy(t, "encoded", enc)
 	mustBeFalsey(t, "err", err)
 
@@ -66,14 +86,14 @@ func TestHashEncoded(t *testing.T) {
 }
 
 func TestHashWithSalt(t *testing.T) {
-	r, err := CFG.Hash(PWD, SALT)
+	r, err := config.Hash(password, salt)
 	mustBeTruthy(t, "r.Config", r.Config)
 	mustBeTruthy(t, "r.Salt", r.Salt)
 	mustBeTruthy(t, "r.Hash", r.Hash)
 	mustBeFalsey(t, "err", err)
 
-	if !bytes.Equal(r.Hash, HASH) {
-		t.Logf("ref: %v", HASH)
+	if !bytes.Equal(r.Hash, expectedHash) {
+		t.Logf("ref: %v", expectedHash)
 		t.Logf("act: %v", r.Hash)
 		t.Error("hashes do not match")
 	}
@@ -81,40 +101,40 @@ func TestHashWithSalt(t *testing.T) {
 	enc := r.Encode()
 	mustBeTruthy(t, "encoded", enc)
 
-	if !bytes.Equal(enc, ENCODED) {
-		t.Logf("ref: %s", string(ENCODED))
+	if !bytes.Equal(enc, expectedEncoded) {
+		t.Logf("ref: %s", string(expectedEncoded))
 		t.Logf("act: %s", string(enc))
 		t.Error("encoded strings do not match")
 	}
 }
 
 func TestVerifyRaw(t *testing.T) {
-	r, err := CFG.HashRaw(PWD)
+	r, err := config.HashRaw(password)
 	mustBeTruthy(t, "r.Config", r.Config)
 	mustBeTruthy(t, "r.Salt", r.Salt)
 	mustBeTruthy(t, "r.Hash", r.Hash)
 	mustBeFalsey(t, "err1", err)
 
-	ok, err := r.Verify(PWD)
+	ok, err := r.Verify(password)
 	mustBeTruthy(t, "ok", ok)
 	mustBeFalsey(t, "err2", err)
 }
 
 func TestVerifyEncoded(t *testing.T) {
-	encoded, err := CFG.HashEncoded(PWD)
+	encoded, err := config.HashEncoded(password)
 	mustBeTruthy(t, "encoded", encoded)
 	mustBeFalsey(t, "err1", err)
 
-	ok, err := VerifyEncoded(PWD, encoded)
+	ok, err := argon2.VerifyEncoded(password, encoded)
 	mustBeTruthy(t, "ok", ok)
 	mustBeFalsey(t, "err2", err)
 }
 
 func TestSecureZeroMemory(t *testing.T) {
-	pwd := append(make([]byte, 0, len(PWD)), PWD...)
+	pwd := append(make([]byte, 0, len(password)), password...)
 
 	// SecureZeroMemory should erase up to cap(pwd) --> let's test that too
-	SecureZeroMemory(pwd[0:0])
+	argon2.SecureZeroMemory(pwd[0:0])
 
 	for _, b := range pwd {
 		if b != 0 {
@@ -125,12 +145,18 @@ func TestSecureZeroMemory(t *testing.T) {
 
 func BenchmarkHash(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_, _ = CFG.Hash(PWD, SALT)
+		_, _ = config.Hash(password, salt)
+	}
+}
+
+func BenchmarkNativeArgonBindingsHash(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_, _ = nativeArgonBindingsConfig.Hash(password, salt)
 	}
 }
 
 func BenchmarkVerify(b *testing.B) {
-	r, err := CFG.Hash(PWD, SALT)
+	r, err := config.Hash(password, salt)
 	if err != nil {
 		b.Error(err)
 	}
@@ -138,17 +164,30 @@ func BenchmarkVerify(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		_, _ = r.Verify(PWD)
+		_, _ = r.Verify(password)
 	}
 }
 
-func BenchmarkEncode(b *testing.B) {
-	r, err := CFG.Hash(PWD, SALT)
+func BenchmarkNativeArgonBindingsVerify(b *testing.B) {
+	r, err := nativeArgonBindingsConfig.Hash(password, salt)
 	if err != nil {
 		b.Error(err)
 	}
 
-	b.SetBytes(int64(len(ENCODED)))
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_, _ = r.Verify(password)
+	}
+}
+
+func BenchmarkEncode(b *testing.B) {
+	r, err := config.Hash(password, salt)
+	if err != nil {
+		b.Error(err)
+	}
+
+	b.SetBytes(int64(len(expectedEncoded)))
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
@@ -157,11 +196,11 @@ func BenchmarkEncode(b *testing.B) {
 }
 
 func BenchmarkDecode(b *testing.B) {
-	b.SetBytes(int64(len(ENCODED)))
+	b.SetBytes(int64(len(expectedEncoded)))
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		_, _ = Decode(ENCODED)
+		_, _ = argon2.Decode(expectedEncoded)
 	}
 }
 
@@ -172,7 +211,7 @@ func BenchmarkSecureZeroMemory16(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		SecureZeroMemory(buf)
+		argon2.SecureZeroMemory(buf)
 	}
 }
 
@@ -183,7 +222,7 @@ func BenchmarkSecureZeroMemory64(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		SecureZeroMemory(buf)
+		argon2.SecureZeroMemory(buf)
 	}
 }
 
@@ -194,7 +233,7 @@ func BenchmarkSecureZeroMemory256(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		SecureZeroMemory(buf)
+		argon2.SecureZeroMemory(buf)
 	}
 }
 
@@ -205,7 +244,7 @@ func BenchmarkSecureZeroMemory1024(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		SecureZeroMemory(buf)
+		argon2.SecureZeroMemory(buf)
 	}
 }
 
@@ -216,7 +255,7 @@ func BenchmarkSecureZeroMemory4096(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		SecureZeroMemory(buf)
+		argon2.SecureZeroMemory(buf)
 	}
 }
 
@@ -227,6 +266,6 @@ func BenchmarkSecureZeroMemory1048576(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		SecureZeroMemory(buf)
+		argon2.SecureZeroMemory(buf)
 	}
 }
