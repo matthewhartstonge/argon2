@@ -7,6 +7,7 @@ package argon2
 import (
 	"crypto/rand"
 	"crypto/subtle"
+
 	"golang.org/x/crypto/argon2"
 )
 
@@ -219,30 +220,11 @@ func VerifyEncoded(pwd []byte, encoded []byte) (bool, error) {
 	return r.Verify(pwd)
 }
 
-// SecureZeroMemory is a helper method which as securely as possible sets all
-// bytes in `b` (up to it's capacity) to `0x00`, erasing it's contents.
-//
-// Using this method DOES NOT make secrets impossible to recover from memory,
-// it's just a good start and generally recommended to use.
-//
-// Due to the nature of memory allocated by the Go runtime, SecureZeroMemory
-// cannot guarantee that the data does not exist elsewhere in memory.
+// SecureZeroMemory is a helper method which sets all bytes in `b`
+// (up to it's capacity) to `0x00`, erasing it's contents.
 func SecureZeroMemory(b []byte) {
-	c := cap(b)
-	if c > 0 {
-		b = b[:c:c]
-		wipeBytes(b)
-	}
-}
-
-// Wipes a byte slice with zeroes.
-//
-func wipeBytes(buf []byte) {
-	if len(buf) == 0 {
-		return
-	}
-	buf[0] = 0
-	for bp := 1; bp < len(buf); bp *= 2 {
-		copy(buf[bp:], buf[:bp])
+	b = b[:cap(b):cap(b)]
+	for i := range b {
+		b[i] = 0
 	}
 }
