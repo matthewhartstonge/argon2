@@ -3,22 +3,26 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:3aaa42af336c850a204bb12ae43f6e0f514c1908b577257d33496bf222be295e"
   name = "golang.org/x/crypto"
   packages = [
     "argon2",
-    "blake2b"
+    "blake2b",
   ]
+  pruneopts = "UT"
   revision = "37a17fe027db43f76fd88b056ddf588563fc8722"
 
 [[projects]]
   branch = "master"
+  digest = "1:52b7d226696ffeb8b3aa86b91fc39163a3d349b8e5703a46461e5fa33c3cb6c9"
   name = "golang.org/x/sys"
   packages = ["cpu"]
+  pruneopts = "UT"
   revision = "c11f84a56e43e20a78cee75a7c034031ecf57d1f"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a094402359a9d3cc04fbb8306174372ee8374788f58f3989610609d50581bf68"
+  input-imports = ["golang.org/x/crypto/argon2"]
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -23,8 +23,6 @@
 #   non-go = false
 #   go-tests = true
 #   unused-packages = true
-
-
 ignored = [
   "github.com/lhecker/argon2"
 ]
