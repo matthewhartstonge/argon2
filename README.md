@@ -37,33 +37,19 @@ The following manual benchmark was performed on a `i7-4770 @ 3.40GHz` with
 ```
 goos: windows
 goarch: amd64
-goversion: go version go1.10.3 windows/amd64
+goversion: go version go1.11 windows/amd64
 pkg: github.com/matthewhartstonge/argon2
-BenchmarkHash-8                        	      50	  27799898 ns/op
-BenchmarkNativeArgonBindingsHash-8     	      30	  42499980 ns/op
-BenchmarkVerify-8                      	      50	  27499686 ns/op
-BenchmarkNativeArgonBindingsVerify-8   	      30	  41932776 ns/op
-BenchmarkEncode-8                      	10000000	       165 ns/op	 519.01 MB/s
-BenchmarkDecode-8                      	 5000000	       266 ns/op	 323.06 MB/s
-BenchmarkSecureZeroMemory16-8          	100000000	        18.9 ns/op	 847.90 MB/s
-BenchmarkSecureZeroMemory64-8          	50000000	        27.0 ns/op	2370.40 MB/s
-BenchmarkSecureZeroMemory256-8         	50000000	        37.1 ns/op	6892.79 MB/s
-BenchmarkSecureZeroMemory1024-8        	20000000	        63.0 ns/op	16266.87 MB/s
-BenchmarkSecureZeroMemory4096-8        	20000000	       112 ns/op	36360.42 MB/s
-BenchmarkSecureZeroMemory1048576-8     	   30000	     57833 ns/op	18131.03 MB/s
+BenchmarkHash-8                        	      50	  27979234 ns/op
+BenchmarkNativeArgonBindingsHash-8     	      30	  42269670 ns/op
+BenchmarkVerify-8                      	      50	  26799596 ns/op
+BenchmarkNativeArgonBindingsVerify-8   	      30	  41367290 ns/op
+BenchmarkEncode-8                      	10000000	       159 ns/op	 540.54 MB/s
+BenchmarkDecode-8                      	 5000000	       265 ns/op	 324.04 MB/s
+BenchmarkSecureZeroMemory16-8          	300000000	         4.50 ns/op	3557.50 MB/s
+BenchmarkSecureZeroMemory64-8          	300000000	         5.20 ns/op	12307.78 MB/s
+BenchmarkSecureZeroMemory256-8         	200000000	         9.29 ns/op	27550.88 MB/s
+BenchmarkSecureZeroMemory1024-8        	100000000	        22.9 ns/op	44633.69 MB/s
+BenchmarkSecureZeroMemory4096-8        	20000000	        77.0 ns/op	53194.84 MB/s
+BenchmarkSecureZeroMemory1048576-8     	   50000	     39450 ns/op	26579.48 MB/s
 PASS
 ```
-
-_Disclaimer:_ I was unable to set the GCC build optimisation flags as the 
-compilation kept saying:
-
-```
-# runtime/cgo
-gcc: error: "-O3: Invalid argument
-
-# - and - 
-# runtime/cgo
-gcc: error: "-march=native": Invalid argument
-```
-
-Could be a windows GCC incompatibility? 
