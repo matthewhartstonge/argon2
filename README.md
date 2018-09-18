@@ -11,7 +11,7 @@ See [_example/example.go](./_example/example.go) for a simple introduction and
 try it out with:
 
 ```
-go run examples/example.go
+go run _example/example.go
 ```
 
 ## Limitations
