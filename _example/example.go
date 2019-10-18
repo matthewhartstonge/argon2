@@ -55,7 +55,7 @@ func main() {
 
 	// NOTE The following can be shortened by writing for instance:
 	//
-	//   ok, err := cfg.VerifyEncoded(password, encoded)
+	//   ok, err := argon2.VerifyEncoded(password, encoded)
 	//
 
 	// We can then proceed to first decode the string back into a Raw struct.
