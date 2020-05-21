@@ -1,7 +1,6 @@
 language: go
 go_import_path: github.com/matthewhartstonge/argon2
 go:
-  - '1.8'
   - '1.9'
   - '1.10'
   - '1.11'
