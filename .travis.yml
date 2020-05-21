@@ -1,21 +1,22 @@
 language: go
-go_import_path: github.com/matthewhartstonge/storage
+go_import_path: github.com/matthewhartstonge/argon2
 go:
-- '1.9'
-- '1.10'
-- '1.11'
+  - '1.8'
+  - '1.9'
+  - '1.10'
+  - '1.11'
+  - '1.12'
+  - '1.13'
+  - '1.14'
 
 before_install:
-- mkdir -p $GOPATH/bin $GOPATH/pkg $GOPATH/src
-- go get github.com/lhecker/argon2
-- curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+  - mkdir -p $GOPATH/bin $GOPATH/pkg $GOPATH/src
+  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
 install:
-- dep ensure
+  - dep ensure
 
 script:
-- go test
-# Run unoptimised benchmarks
-- go test -bench=.
-# Run optimised benchmarks
-- CGO_CFLAGS="-O3 -march=native" go test -bench=.
+  - go test
+  # Run benchmarks
+  - go test -bench=.
