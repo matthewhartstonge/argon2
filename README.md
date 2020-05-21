@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/matthewhartstonge/argon2.svg?branch=master)](https://travis-ci.org/matthewhartstonge/argon2)
 
-argon2 provides a pure Go implementation for Argon2 password hashing. 
+argon2 provides a pure Go implementation for Argon2 password hashing.
 
 Intended to be a drop in replacement for lhecker's [argon2](https://github.com/lhecker/argon2)
 library.
