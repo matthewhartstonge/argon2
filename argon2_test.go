@@ -9,7 +9,6 @@ import (
 	"reflect"
 	"testing"
 
-	nativeArgonBindings "github.com/lhecker/argon2"
 	"github.com/matthewhartstonge/argon2"
 )
 
@@ -22,15 +21,6 @@ var (
 		Parallelism: 1,
 		Mode:        argon2.ModeArgon2id,
 		Version:     argon2.Version13,
-	}
-	nativeArgonBindingsConfig = nativeArgonBindings.Config{
-		HashLength:  32,
-		SaltLength:  16,
-		TimeCost:    1,
-		MemoryCost:  32 * 1024,
-		Parallelism: 1,
-		Mode:        nativeArgonBindings.ModeArgon2id,
-		Version:     nativeArgonBindings.Version13,
 	}
 	password        = []byte("password")
 	salt            = []byte("saltsalt")
@@ -149,27 +139,8 @@ func BenchmarkHash(b *testing.B) {
 	}
 }
 
-func BenchmarkNativeArgonBindingsHash(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		nativeArgonBindingsConfig.Hash(password, salt)
-	}
-}
-
 func BenchmarkVerify(b *testing.B) {
 	r, err := config.Hash(password, salt)
-	if err != nil {
-		b.Error(err)
-	}
-
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		r.Verify(password)
-	}
-}
-
-func BenchmarkNativeArgonBindingsVerify(b *testing.B) {
-	r, err := nativeArgonBindingsConfig.Hash(password, salt)
 	if err != nil {
 		b.Error(err)
 	}
