@@ -3,14 +3,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:3aaa42af336c850a204bb12ae43f6e0f514c1908b577257d33496bf222be295e"
+  digest = "1:f88491d9b279ea51b3ff337d3f936a168e431a8c45b0e0c12c2b69893b018ea4"
   name = "golang.org/x/crypto"
   packages = [
     "argon2",
     "blake2b",
   ]
   pruneopts = "UT"
-  revision = "37a17fe027db43f76fd88b056ddf588563fc8722"
+  revision = "06a226fb4e3765ef3f48aa2852b401bc7b98e981"
 
 [[projects]]
   branch = "master"
