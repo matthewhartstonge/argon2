@@ -9,6 +9,9 @@ go:
   - '1.16'
   - 'tip'
 
+env:
+  - GO111MODULE=on
+
 install:
   - go get
 
