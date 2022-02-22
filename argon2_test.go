@@ -135,7 +135,21 @@ func TestSecureZeroMemory(t *testing.T) {
 
 func BenchmarkHash(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		config.Hash(password, salt)
+		_, _ = config.Hash(password, salt)
+	}
+}
+
+func BenchmarkMemoryConstrainedDefaults(b *testing.B) {
+	cfg := argon2.MemoryConstrainedDefaults()
+	for i := 0; i < b.N; i++ {
+		_, _ = cfg.Hash(password, salt)
+	}
+}
+
+func BenchmarkRecommendedDefaults(b *testing.B) {
+	cfg := argon2.RecommendedDefaults()
+	for i := 0; i < b.N; i++ {
+		_, _ = cfg.Hash(password, salt)
 	}
 }
 
@@ -148,7 +162,7 @@ func BenchmarkVerify(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		r.Verify(password)
+		_, _ = r.Verify(password)
 	}
 }
 
@@ -171,7 +185,7 @@ func BenchmarkDecode(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		argon2.Decode(expectedEncoded)
+		_, _ = argon2.Decode(expectedEncoded)
 	}
 }
 

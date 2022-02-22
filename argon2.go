@@ -116,22 +116,50 @@ type Config struct {
 	Version Version
 }
 
-// DefaultConfig returns a Config struct suitable for most servers.
+// DefaultConfig returns a Config struct suitable for most servers. These
+// default settings are based on RFC9106 recommendations.
 //
-// These default settings are based on the draft RFC recommendations.
-// See: https://tools.ietf.org/html/draft-irtf-cfrg-argon2-03#section-9.4
+// Refer:
+//   * https://datatracker.ietf.org/doc/html/rfc9106#section-7.4
+//   * https://datatracker.ietf.org/doc/html/rfc9106#section-4
 //
-// These default settings result in around 20ms of computation time while using
-// 64 MiB of memory.
-// (Tested on an i7 4770 @ 3.4 GHz & AData PC3-12800 @ 1600 MHz).
+// The memory constrained settings result in around 50ms of computation time
+// while using 64 MiB of memory during hashing. Tested on an Intel Core i7-7700
+// @ 3.6 GHz with DDR4 @ 2133 MHz.
 func DefaultConfig() Config {
+	return MemoryConstrainedDefaults()
+}
+
+// RecommendedDefaults provides configuration based on the first recommended
+// option as described in RFC9106.
+//
+// If a uniformly safe option that is not tailored to your application or
+// hardware is acceptable, select Argon2id with t=1 iteration, p=4 lanes,
+// m=2^(21) (2 GiB of RAM), 128-bit salt, and 256-bit tag size.
+func RecommendedDefaults() Config {
 	return Config{
-		HashLength: 32,
-		// 128 bits is sufficient for all applications, but can be reduced to
-		// 64 bits in the case of space constraints.
-		SaltLength:  16,
+		HashLength:  32, // 32 * 8 = 256-bits
+		SaltLength:  16, // 16 * 8 = 128-bits
 		TimeCost:    1,
-		MemoryCost:  64 * 1024,
+		MemoryCost:  2 * 1024 * 1024, // 2^(21) (2 GiB of RAM)
+		Parallelism: 4,
+		Mode:        ModeArgon2id,
+		Version:     Version13,
+	}
+}
+
+// MemoryConstrainedDefaults provides configuration based on the second
+// recommended option as described in RFC9106.
+//
+// If much less memory is available, a uniformly safe option is Argon2id with
+// t=3 iterations, p=4 lanes, m=2^(16) (64 MiB of RAM), 128-bit salt, and
+// 256-bit tag size.
+func MemoryConstrainedDefaults() Config {
+	return Config{
+		HashLength:  32, // 32 * 8 = 256-bits
+		SaltLength:  16, // 16 * 8 = 128-bits
+		TimeCost:    3,
+		MemoryCost:  64 * 1024, // 2^(16) (64MiB of RAM)
 		Parallelism: 4,
 		Mode:        ModeArgon2id,
 		Version:     Version13,
