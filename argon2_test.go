@@ -139,6 +139,20 @@ func BenchmarkHash(b *testing.B) {
 	}
 }
 
+func BenchmarkMemoryConstrainedDefaults(b *testing.B) {
+	cfg := argon2.MemoryConstrainedDefaults()
+	for i := 0; i < b.N; i++ {
+		_, _ = cfg.Hash(password, salt)
+	}
+}
+
+func BenchmarkRecommendedDefaults(b *testing.B) {
+	cfg := argon2.RecommendedDefaults()
+	for i := 0; i < b.N; i++ {
+		_, _ = cfg.Hash(password, salt)
+	}
+}
+
 func BenchmarkVerify(b *testing.B) {
 	r, err := config.Hash(password, salt)
 	if err != nil {
