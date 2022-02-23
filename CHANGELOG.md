@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [v0.2.1] - 2022-02-22
+GPG signed release.
+
+### Added
+- tests: adds benchmarks to compare the default recommendations.
+
+### Changed
+- travis: updates to test against go1.17.
+- deps: updates `go.mod` to `go@1.17` and `x/crypto` to latest.
+- explicitly ignores returned error values under benchmarks (errcheck).
+- argon2: updates recommended defaults as described by RFC9106.
+
 ## [v0.2.0] - 2022-02-22
 ### Added
 - tests: adds benchmarks to compare the default recommendations.
@@ -71,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - readme: Fix example link
 
 [Unreleased]: https://github.com/matthewhartstonge/argon2/tree/master
+[v0.2.1]: https://github.com/matthewhartstonge/argon2/tree/v0.2.1
 [v0.2.0]: https://github.com/matthewhartstonge/argon2/tree/v0.2.0
 [v0.1.5]: https://github.com/matthewhartstonge/argon2/tree/v0.1.5
 [v0.1.4]: https://github.com/matthewhartstonge/argon2/tree/v0.1.4
