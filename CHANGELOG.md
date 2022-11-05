@@ -5,6 +5,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [v0.3.0] - 2022-11-05
+### Added
+- .github: adds support for github actions, codeowners and dependabot.
+
+### Changed
+- deps: updates to `go@1.18` and `golang.org/x/crypto@v0.1.0`.
+- readme: update badges and remove references to travis ci.
+- *: update project licensing.
+
+### Fixed
+- argon2: fixes grammar and comment line length.
+
+### Removed
+- dep: removes support for dep.
+- travis: removes travis configuration.
+
 ## [v0.2.1] - 2022-02-22
 GPG signed release.
 
@@ -83,6 +99,7 @@ GPG signed release.
 - readme: Fix example link
 
 [Unreleased]: https://github.com/matthewhartstonge/argon2/tree/master
+[v0.3.0]: https://github.com/matthewhartstonge/argon2/tree/v0.3.0
 [v0.2.1]: https://github.com/matthewhartstonge/argon2/tree/v0.2.1
 [v0.2.0]: https://github.com/matthewhartstonge/argon2/tree/v0.2.0
 [v0.1.5]: https://github.com/matthewhartstonge/argon2/tree/v0.1.5
