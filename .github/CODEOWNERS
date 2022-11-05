@@ -1,0 +1,9 @@
+# GitHub Code Owners
+# More info about this file can be found in the GitHub documentation:
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#codeowners-syntax
+
+# Default reviewers for all files
+*               @matthewhartstonge
+
+# Request a review from devops team members for github related changes.
+.github/        @matthewhartstonge

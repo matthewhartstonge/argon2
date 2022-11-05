@@ -1,3 +1,19 @@
+/*
+ * Copyright 2022. Matthew Hartstonge <matt@mykro.co.nz>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 // Package argon2 implements the key derivation function Argon2.
 //
 // Argon2 was selected as the winner of the Password Hashing Competition and
@@ -168,7 +184,8 @@ func MemoryConstrainedDefaults() Config {
 
 // Hash takes a password and optionally a salt and returns an Argon2 hash.
 //
-// If salt is nil a appropriate salt of Config.SaltLength bytes is generated for you.
+// If salt is nil an appropriate salt of Config.SaltLength bytes is generated
+// for you.
 func (c *Config) Hash(pwd []byte, salt []byte) (Raw, error) {
 	if pwd == nil {
 		return Raw{}, ErrPwdTooShort
@@ -214,7 +231,8 @@ func (c *Config) HashEncoded(pwd []byte) (encoded []byte, err error) {
 	return
 }
 
-// Raw wraps a salt and hash pair including the Config with which it was generated.
+// Raw wraps a salt and hash pair including the Config with which it was
+// generated.
 //
 // A Raw struct is generated using Decode() or the Hash*() methods above.
 //
@@ -239,7 +257,8 @@ func (raw *Raw) Verify(pwd []byte) (bool, error) {
 	return subtle.ConstantTimeCompare(r.Hash, raw.Hash) == 1, nil
 }
 
-// VerifyEncoded returns true if `pwd` matches the encoded hash `encoded` and otherwise false.
+// VerifyEncoded returns true if `pwd` matches the encoded hash `encoded` and
+// otherwise false.
 func VerifyEncoded(pwd []byte, encoded []byte) (bool, error) {
 	r, err := Decode(encoded)
 	if err != nil {
@@ -249,7 +268,7 @@ func VerifyEncoded(pwd []byte, encoded []byte) (bool, error) {
 }
 
 // SecureZeroMemory is a helper method which sets all bytes in `b`
-// (up to it's capacity) to `0x00`, erasing it's contents.
+// (up to its capacity) to `0x00`, erasing its contents.
 func SecureZeroMemory(b []byte) {
 	b = b[:cap(b):cap(b)]
 	for i := range b {
