@@ -175,7 +175,8 @@ var (
 	encTypID  = []byte("id$v=")
 )
 
-// Encode turns a Raw struct into the official stringified/encoded argon2 representation.
+// Encode turns a Raw struct into the official stringified/encoded argon2
+// representation.
 //
 // The resulting byte slice can safely be turned into a string.
 func (raw *Raw) Encode() []byte {
@@ -220,7 +221,8 @@ func (raw *Raw) Encode() []byte {
 	return buf
 }
 
-// Decode takes a stringified/encoded argon2 hash and turns it back into a Raw struct.
+// Decode takes a stringified/encoded argon2 hash and turns it back into a Raw
+// struct.
 //
 // This decoder ignores "data" attributes as they are likely to be deprecated.
 func Decode(encoded []byte) (Raw, error) {
