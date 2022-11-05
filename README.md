@@ -1,6 +1,6 @@
 # 🔐 argon2
 
-[![Build Status](https://travis-ci.org/matthewhartstonge/argon2.svg?branch=master)](https://travis-ci.org/matthewhartstonge/argon2)
+[![Go Reference](https://pkg.go.dev/badge/github.com/matthewhartstonge/argon2.svg)](https://pkg.go.dev/github.com/matthewhartstonge/argon2) [![Go Report Card](https://goreportcard.com/badge/github.com/matthewhartstonge/argon2)](https://goreportcard.com/report/github.com/matthewhartstonge/argon2) [![go](https://github.com/matthewhartstonge/argon2/actions/workflows/go.yml/badge.svg)](https://github.com/matthewhartstonge/argon2/actions/workflows/go.yml)
 
 argon2 provides a pure Go implementation for Argon2 password hashing.
 
@@ -63,17 +63,12 @@ go run _example/example.go
 
 ## Benchmarks
 
-Benchmarks are run on each build. Follow the build badge link to check the 
-latest status on benchmarking results via TravisCI.
-
-[![Build Status](https://travis-ci.org/matthewhartstonge/argon2.svg?branch=master)](https://travis-ci.org/matthewhartstonge/argon2) 
-
 The following manual benchmark was performed on a `i7-7700 @ 3.60GHz` with 
 `AData DDR4 2132MHz` memory.
 
 Note: 
-- The native benchmarks have now been moved into a separate branch for 
-  reference in order to keep go mod dependencies tidy.
+- The native benchmarks are in a separate branch for reference in order to keep
+  go mod dependencies tidy.
 
 ```
 goos: windows
