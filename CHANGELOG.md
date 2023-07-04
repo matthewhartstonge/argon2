@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3](https://github.com/matthewhartstonge/argon2/compare/v0.3.2...v0.3.3) (2023-07-04)
+
+
+### Bug Fixes
+
+* **.github/dependabot:** fixes branch targets in dependabot configuration. ([64ab947](https://github.com/matthewhartstonge/argon2/commit/64ab947d1921dc80d8352516cf9c711044b2ed8f))
+
 ## [Unreleased]
 ## [v0.3.2] - 2022-11-18
 ### Changed
