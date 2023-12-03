@@ -101,3 +101,15 @@ BenchmarkSecureZeroMemory1048576-8         52404             22442 ns/op       4
 PASS
 ok      github.com/matthewhartstonge/argon2     18.481s
 ```
+
+## Versioning Strategy
+
+The API is stable and has been running in production for many years now, therefore won't be changing.
+
+This library has a single dependency on `golang.org/x/crypto`. This means that as the version of Go is updated there, this library will roll up it's version to a new minor.
+Any CVEs/security patches that come through via dependabot, without a resulting Go version update, will become a patch release.
+
+For example:
+
+- If a version of `/x/crypto` now requires `go@1.28`, `argon2` will go from `v1.0.0` -> `v1.1.0`.
+- If `x/crypto` releases a version that resolves CVEs with no requirement to upgrade Go, then `argon2` will go from `v1.0.0` -> `v1.0.1`.
