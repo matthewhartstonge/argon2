@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Miscellaneous Chores
 
 * release 1.0.2 ([64bcf86](https://github.com/matthewhartstonge/argon2/commit/64bcf86837060e454fafb59acc3d12feb3a3322d))
+* chore: Bump golang.org/x/crypto from 0.28.0 to 0.29.0 ([7d61928](https://github.com/matthewhartstonge/argon2/commit/7d619289f4cafec245e657e6ea183d48f00e7cbd))
+* chore: Bump golang.org/x/crypto from 0.27.0 to 0.28.0 ([dbe7209](https://github.com/matthewhartstonge/argon2/commit/dbe72099829775cac5519e4afcd5b475200bebef))
 
 ## [1.0.1](https://github.com/matthewhartstonge/argon2/compare/v1.0.0...v1.0.1) (2024-09-12)
 
