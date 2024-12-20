@@ -153,7 +153,7 @@ func hash(cfg *config, password string) (string, error) {
 
 // isUint8 performs bounds checking for uint8
 func isUint8(i uint) (uint8, error) {
-	if i < 0 || i > math.MaxUint8 {
+	if i > math.MaxUint8 {
 		return 0, fmt.Errorf("argon2: invalid uint8 value: %d", i)
 	}
 
@@ -162,7 +162,7 @@ func isUint8(i uint) (uint8, error) {
 
 // isUint32 performs bounds checking for uint32
 func isUint32(i uint) (uint32, error) {
-	if i < 0 || i > math.MaxUint32 {
+	if i > math.MaxUint32 {
 		return 0, fmt.Errorf("argon2: invalid uint32 value: %d", i)
 	}
 
