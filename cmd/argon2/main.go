@@ -10,12 +10,31 @@ import (
 	"github.com/matthewhartstonge/argon2"
 )
 
+const (
+	// AppName configures the binaries name.
+	AppName = "argon2"
+	// AppVersion outputs the binaries version.
+	AppVersion = "0.1.3" // x-release-please-version
+)
+
+var (
+	// configure flags
+	t       = flag.Uint("t", 0, "time cost specifies the number of iterations of argon2.")
+	m       = flag.Uint("m", 0, "memory cost specifies the amount of memory to use in kibibytes.")
+	p       = flag.Uint("p", 0, "parallelism cost specifies the number of parallel threads to spawn.")
+	hashLen = flag.Uint("hash-len", 0, "hash length specifies the length of the resulting hash in bytes.")
+	saltLen = flag.Uint("salt-len", 0, "salt length specifies the length of the resulting salt in bytes.")
+	s       = flag.Bool("s", false, "silent removes all cli output.")
+)
+
 type config struct {
 	silent bool
 	argon  argon2.Config
 }
 
 func main() {
+	setupFlagUsage()
+
 	cfg, err := parseFlags()
 	if err != nil {
 		cliPrintln(cfg, err)
@@ -28,7 +47,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	out, err := genHash(cfg, pw)
+	out, err := hash(cfg, pw)
 	if err != nil {
 		cliPrintln(cfg, err)
 		os.Exit(1)
@@ -37,14 +56,21 @@ func main() {
 	fmt.Println(out)
 }
 
-func parseFlags() (*config, error) {
-	t := flag.Uint("t", 0, "time cost specifies the number of iterations of argon2.")
-	m := flag.Uint("m", 0, "memory cost specifies the amount of memory to use in kibibytes.")
-	p := flag.Uint("p", 0, "parallelism cost")
-	hashLen := flag.Uint("hash-len", 0, "hash length specifies the length of the resulting hash in bytes.")
-	saltLen := flag.Uint("salt-len", 0, "salt length specifies the length of the resulting salt in bytes.")
-	s := flag.Bool("s", false, "silent removes all cli output")
+// setupFlagUsage configures the binaries custom usage signature.
+func setupFlagUsage() {
+	flag.Usage = func() {
+		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "NAME:\n\t%s - An Argon2id CLI hash generator\n\n", AppName)
+		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "USAGE:\n\t%s [command options] p@ssw0rd\n\n", AppName)
+		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "VERSION:\n\tv%s\n\n", AppVersion)
+		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "AUTHOR:\n\tMatthew Hartstonge - https://github.com/matthewhartstonge\n\n")
+		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "OPTIONS:\n")
+		flag.PrintDefaults()
+	}
+}
 
+// parseFlags extracts, validates and configures argon2 by the based on the
+// set flag options.
+func parseFlags() (*config, error) {
 	flag.Parse()
 
 	cfg := &config{
@@ -98,7 +124,7 @@ func parseFlags() (*config, error) {
 	return cfg, nil
 }
 
-// parsePassword extracts and returns the password to hash.
+// parsePassword extracts and returns the password to hash from args.
 func parsePassword() (string, error) {
 	args := flag.Args()
 	if len(args) == 0 {
@@ -108,8 +134,8 @@ func parsePassword() (string, error) {
 	return args[0], nil
 }
 
-// genHash encodes and returns a stringified argon2 hash.
-func genHash(cfg *config, password string) (string, error) {
+// hash encodes and returns a stringified argon2 hash.
+func hash(cfg *config, password string) (string, error) {
 	cliPrintf(cfg,
 		"Generating argon2id hash with m=%d, t=%d, p=%d4...\n\n",
 		cfg.argon.MemoryCost,
