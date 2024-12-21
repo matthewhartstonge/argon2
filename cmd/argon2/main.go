@@ -15,6 +15,10 @@ const (
 	AppName = "argon2"
 	// AppVersion outputs the binaries version.
 	AppVersion = "0.1.3" // x-release-please-version
+	// AppCommit specifies the exact git commit the binary has been built from.
+	AppCommit = "unknown"
+	// AppCommitDate specifies the date the commit was made.
+	AppCommitDate = ""
 )
 
 var (
@@ -61,7 +65,7 @@ func setupFlagUsage() {
 	flag.Usage = func() {
 		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "NAME:\n\t%s - An Argon2id CLI hash generator\n\n", AppName)
 		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "USAGE:\n\t%s [command options] p@ssw0rd\n\n", AppName)
-		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "VERSION:\n\tv%s\n\n", AppVersion)
+		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "VERSION:\n\tv%s (%s) %s\n\n", AppVersion, AppCommit, AppCommitDate)
 		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "AUTHOR:\n\tMatthew Hartstonge - https://github.com/matthewhartstonge\n\n")
 		_, _ = fmt.Fprintf(flag.CommandLine.Output(), "OPTIONS:\n")
 		flag.PrintDefaults()
