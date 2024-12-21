@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0](https://github.com/matthewhartstonge/argon2/compare/v1.0.3...v1.1.0) (2024-12-21)
+
+
+### Features
+
+* **cmd/argon2:** adds argon2 cli. ([32a22f9](https://github.com/matthewhartstonge/argon2/commit/32a22f986e28f574553af5a4540b5d74439f1492))
+* **goreleaser:** adds configuration for automated builds. ([c8385f8](https://github.com/matthewhartstonge/argon2/commit/c8385f89c37ee265cb8afdfa34fdb56777daf9d1))
+
 ## [1.0.3](https://github.com/matthewhartstonge/argon2/compare/v1.0.2...v1.0.3) (2024-12-12)
 
 
