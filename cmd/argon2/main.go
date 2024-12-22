@@ -10,7 +10,7 @@ import (
 	"github.com/matthewhartstonge/argon2"
 )
 
-const (
+var (
 	// AppName configures the binaries name.
 	AppName = "argon2"
 	// AppVersion outputs the binaries version.
