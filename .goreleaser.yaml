@@ -23,7 +23,7 @@ builds:
         goarch: '386'
     # Custom ldflags.
     ldflags:
-      - -s -w -X main.AppVersion={{.Version}} -X main.AppCommit={{.Commit}} -X main.AppCommitDate={{.CommitDate}}
+      - '-s -w -X main.AppVersion={{.Version}} -X main.AppCommit={{.ShortCommit}} -X main.AppCommitDate={{.CommitDate}}'
     # Path to main.go file or main package.
     # Default: `.`.
     main: ./cmd/argon2
