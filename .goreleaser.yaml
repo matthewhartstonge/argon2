@@ -57,3 +57,35 @@ release:
     ---
 
     Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
+
+notarize:
+  macos:
+    - # Whether this configuration is enabled or not.
+      enabled: true
+
+      # Before notarizing, we need to sign the binary.
+      # This block defines the configuration for doing so.
+      sign:
+        # The .p12 certificate file path or its base64'd contents.
+        certificate: "{{.Env.MACOS_SIGN_P12}}"
+
+        # The password to be used to open the certificate.
+        password: "{{.Env.MACOS_SIGN_PASSWORD}}"
+
+      # Then, we notarize the binaries.
+      notarize:
+        # The issuer ID.
+        # Its the UUID you see when creating the App Store Connect key.
+        issuer_id: "{{.Env.MACOS_NOTARY_ISSUER_ID}}"
+
+        # Key ID.
+        # You can see it in the list of App Store Connect Keys.
+        # It will also be in the ApiKey filename.
+        key_id: "{{.Env.MACOS_NOTARY_KEY_ID}}"
+
+        # The .p8 key file path or its base64'd contents.
+        key: "{{.Env.MACOS_NOTARY_KEY}}"
+
+        # Whether to wait for the notarization to finish.
+        # Not recommended, as it could take a really long time.
+        wait: false
