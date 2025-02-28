@@ -23,7 +23,6 @@ package argon2
 import (
 	"crypto/rand"
 	"crypto/subtle"
-
 	"golang.org/x/crypto/argon2"
 )
 
@@ -32,7 +31,7 @@ type Mode uint32
 
 const (
 	// modeArgon2d is added here for completeness, but is not exposed as the
-	// crypto does not expose argon2d as an option.
+	// x/crypto library does not expose argon2d as an option.
 	//
 	// modeArgon2d is faster and uses data-depending memory access,
 	// which makes it highly resistant against GPU cracking attacks and
@@ -136,8 +135,8 @@ type Config struct {
 // default settings are based on RFC9106 recommendations.
 //
 // Refer:
-//   * https://datatracker.ietf.org/doc/html/rfc9106#section-7.4
-//   * https://datatracker.ietf.org/doc/html/rfc9106#section-4
+//   - https://datatracker.ietf.org/doc/html/rfc9106#section-7.4
+//   - https://datatracker.ietf.org/doc/html/rfc9106#section-4
 //
 // The memory constrained settings result in around 50ms of computation time
 // while using 64 MiB of memory during hashing. Tested on an Intel Core i7-7700
@@ -259,6 +258,12 @@ func (raw *Raw) Verify(pwd []byte) (bool, error) {
 
 // VerifyEncoded returns true if `pwd` matches the encoded hash `encoded` and
 // otherwise false.
+//
+// Note: Only supports verifying `argon2i` and `argon2id` hashes. As `x/crypto`
+// doesn't expose the generation of `argon2d` hashing, we can't generate an
+// `argon2d` hash to verify the incoming password against.
+//
+// Refer: https://github.com/matthewhartstonge/argon2/issues/80#issuecomment-2679636640
 func VerifyEncoded(pwd []byte, encoded []byte) (bool, error) {
 	r, err := Decode(encoded)
 	if err != nil {
