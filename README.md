@@ -109,7 +109,9 @@ The API is stable and has been running in production for many years now, therefo
 This library has a single dependency on `golang.org/x/crypto`. This means that as the version of Go is updated there, this library will roll up it's version to a new minor.
 Any CVEs/security patches that come through via dependabot, without a resulting Go version update, will become a patch release.
 
+As of 2025, `golang.org/x` libraries only support `1.(N-1).0` as their versioning strategy. If you're interested you can read about the implemented [automate go directive maintenance in golang.org/x repositories](https://go.googlesource.com/proposal/+/master/design/69095-x-repo-continuous-go.md) proposal. 
+
 For example:
 
-- If a version of `/x/crypto` now requires `go@1.28`, `argon2` will go from `v1.0.0` -> `v1.1.0`.
+- If a version of `/x/crypto` now requires `go@1.28.0`, `argon2` will go from `v1.0.0` -> `v1.1.0`.
 - If `x/crypto` releases a version that resolves CVEs with no requirement to upgrade Go, then `argon2` will go from `v1.0.0` -> `v1.0.1`.
