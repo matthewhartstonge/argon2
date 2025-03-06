@@ -6,10 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0](https://github.com/matthewhartstonge/argon2/compare/v1.1.1...v1.2.0) (2025-03-06)
 
-
 ### Features
 
 * **deps:** upgrades to go@1.23.0. ([9c86600](https://github.com/matthewhartstonge/argon2/commit/9c86600313babe362ca9cbaae5d270931e72e8c2))
+
+note: `go@1.21` introduced a change in how the go directive works, now enforcing Minimal Version Selection (MVS). The best thing to do is upgrade your Go toolchain to `n-1` and set the `go` directive in your `go.mod` file to `go 1.(N-1).0` - notice the requirement for the patch set to `0`.
+
+If you are a library maintainer, PLEASE make sure to only set this to `0` and remove the `toolchain` directive, otherwise you will make downstream users will cry (myself included).
+
+Why? As part of an internal Go proposal, all golang.org/x libraries now only support n-1.
+
+> I propose that each time that a new major Go release 1.N.0 is made, the go directive in all golang.org/x repos will be upgraded to go 1.(N-1).0. For example, when Go 1.28.0 is released, golang.org/x modules would have their go directive set to go 1.27.0.
+
+Refer: https://go.googlesource.com/proposal/+/master/design/69095-x-repo-continuous-go.md
 
 ## [1.1.1](https://github.com/matthewhartstonge/argon2/compare/v1.1.0...v1.1.1) (2024-12-23)
 
