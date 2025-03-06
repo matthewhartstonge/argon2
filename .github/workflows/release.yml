@@ -32,6 +32,8 @@ jobs:
 
       - name: Set up Go
         uses: actions/setup-go@v5
+        with:
+          go-version: 'oldstable'
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
