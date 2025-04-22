@@ -18,6 +18,7 @@ package argon2_test
 
 import (
 	"bytes"
+	"errors"
 	"reflect"
 	"testing"
 
@@ -84,6 +85,19 @@ func TestHashEncoded(t *testing.T) {
 		if b == 0 {
 			t.Error("encoded must not contain 0x00")
 		}
+	}
+}
+
+func TestHashEncodedArgon2dError(t *testing.T) {
+	cfg := argon2.DefaultConfig()
+	cfg.Mode = 0 // argon2d
+
+	_, err := cfg.HashEncoded(password)
+	if err == nil {
+		t.Error("HashEncoded() should have returned an error")
+	}
+	if !errors.Is(err, argon2.ErrModeUnsupported) {
+		t.Errorf("HashEncoded() should have returned ErrModeUnsupported")
 	}
 }
 

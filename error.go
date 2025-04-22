@@ -59,6 +59,7 @@ var (
 	ErrThreadFail            = Error("threading failure")
 	ErrDecodingLengthFail    = Error("some of encoded parameters are too long or too short")
 	ErrVerifyMismatch        = Error("the password does not match the supplied hash")
+	ErrModeUnsupported       = Error("argon2d hashing mode unsupported by go maintainers")
 )
 
 const (

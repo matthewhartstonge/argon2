@@ -205,6 +205,8 @@ func (c *Config) Hash(pwd []byte, salt []byte) (Raw, error) {
 		hash = argon2.Key(pwd, salt, c.TimeCost, c.MemoryCost, c.Parallelism, c.HashLength)
 	case ModeArgon2id:
 		hash = argon2.IDKey(pwd, salt, c.TimeCost, c.MemoryCost, c.Parallelism, c.HashLength)
+	case modeArgon2d:
+		return Raw{}, ErrModeUnsupported
 	}
 
 	return Raw{
