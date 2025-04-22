@@ -238,32 +238,15 @@ func (raw *Raw) Encode() []byte {
 //
 // This decoder ignores "data" attributes as they are likely to be deprecated.
 func Decode(encoded []byte) (Raw, error) {
-	pa := parser{buf: encoded}
+	pa := &parser{buf: encoded}
 
 	if pa.check(decChunk1) != 0 {
 		return Raw{}, ErrIncorrectType
 	}
 
-	typ1 := pa.readByte()
-	typ2 := pa.readByte()
-	var mode Mode
-
-	if typ1 == 'i' {
-		if typ2 == 'd' {
-			r := pa.readByte()
-
-			if r == '$' {
-				mode = ModeArgon2id
-			} else {
-				return Raw{}, ErrIncorrectType
-			}
-		} else if typ2 == '$' {
-			mode = ModeArgon2i
-		}
-	} else if typ1 == 'd' {
-		mode = modeArgon2d
-	} else {
-		return Raw{}, ErrIncorrectType
+	mode, err := checkMode(pa)
+	if err != nil {
+		return Raw{}, err
 	}
 
 	ok := pa.check(decChunk2)
@@ -304,4 +287,28 @@ func Decode(encoded []byte) (Raw, error) {
 		Salt: salt[0:sl],
 		Hash: hash[0:hl],
 	}, nil
+}
+
+// checkMode returns the parsed argon2 mode, or an error.
+func checkMode(pa *parser) (mode Mode, err error) {
+	typ1 := pa.readByte()
+	typ2 := pa.readByte()
+
+	switch typ1 {
+	case 'i':
+		switch typ2 {
+		case 'd':
+			if r := pa.readByte(); r == '$' {
+				return ModeArgon2id, nil
+			}
+
+		case '$':
+			return ModeArgon2i, nil
+		}
+
+	case 'd':
+		return modeArgon2d, nil
+	}
+
+	return mode, ErrIncorrectType
 }

@@ -75,3 +75,78 @@ func Test_parser_parseUint8(t *testing.T) {
 		})
 	}
 }
+
+func Test_checkMode(t *testing.T) {
+	type args struct {
+		pa *parser
+	}
+	tests := []struct {
+		name     string
+		args     args
+		wantMode Mode
+		wantErr  bool
+	}{
+		{
+			name: "should error parsing",
+			args: args{
+				pa: &parser{
+					buf: []byte("0$"),
+				},
+			},
+			wantMode: modeArgon2d,
+			wantErr:  true,
+		},
+		{
+			name: "should error parsing word",
+			args: args{
+				pa: &parser{
+					buf: []byte("argon2d$"),
+				},
+			},
+			wantMode: modeArgon2d,
+			wantErr:  true,
+		},
+		{
+			name: "should parse argon2d mode",
+			args: args{
+				pa: &parser{
+					buf: []byte("d$"),
+				},
+			},
+			wantMode: modeArgon2d,
+			wantErr:  false,
+		},
+		{
+			name: "should parse argon2i mode",
+			args: args{
+				pa: &parser{
+					buf: []byte("i$"),
+				},
+			},
+			wantMode: ModeArgon2i,
+			wantErr:  false,
+		},
+		{
+			name: "should parse argon2id mode",
+			args: args{
+				pa: &parser{
+					buf: []byte("id$"),
+				},
+			},
+			wantMode: ModeArgon2id,
+			wantErr:  false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotMode, err := checkMode(tt.args.pa)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("checkMode() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if gotMode != tt.wantMode {
+				t.Errorf("checkMode() gotMode = %v, want %v", gotMode, tt.wantMode)
+			}
+		})
+	}
+}
