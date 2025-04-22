@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0](https://github.com/matthewhartstonge/argon2/compare/v1.2.1...v1.3.0) (2025-04-22)
+
+
+### Features
+
+* return error on attempting to hash `argon2d`. ([71f8bcb](https://github.com/matthewhartstonge/argon2/commit/71f8bcb6797b19eeb4b142e7f7a6b7d56cee521c))
+
+
+### Bug Fixes
+
+* **lint:** migrates if-else blocks to tagged switches (QF1003). ([04cdec5](https://github.com/matthewhartstonge/argon2/commit/04cdec5d85be929c70f569a0da4d128ba565014c))
+
 ## [1.2.1](https://github.com/matthewhartstonge/argon2/compare/v1.2.0...v1.2.1) (2025-04-08)
 
 
