@@ -14,7 +14,7 @@ var (
 	// AppName configures the binaries name.
 	AppName = "argon2"
 	// AppVersion outputs the binaries version.
-	AppVersion = "1.3.1" // x-release-please-version
+	AppVersion = "1.3.2" // x-release-please-version
 	// AppCommit specifies the exact git commit the binary has been built from.
 	AppCommit = "unknown"
 	// AppCommitDate specifies the date the commit was made.
