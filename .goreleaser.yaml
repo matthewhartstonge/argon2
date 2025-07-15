@@ -29,7 +29,7 @@ builds:
     main: ./cmd/argon2
 
 archives:
-  - format: tar.gz
+  - formats: [ 'tar.gz' ]
     # this name template makes the OS and Arch compatible with the results of `uname`.
     name_template: >-
       {{ .ProjectName }}_
@@ -41,7 +41,7 @@ archives:
     # use zip for windows archives
     format_overrides:
       - goos: windows
-        format: zip
+        formats: [ 'zip' ]
 
 changelog:
   sort: asc
@@ -75,7 +75,7 @@ notarize:
       # Then, we notarize the binaries.
       notarize:
         # The issuer ID.
-        # Its the UUID you see when creating the App Store Connect key.
+        # It is the UUID you see when creating the App Store Connect key.
         issuer_id: "{{.Env.MACOS_NOTARY_ISSUER_ID}}"
 
         # Key ID.
