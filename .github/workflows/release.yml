@@ -36,7 +36,7 @@ jobs:
           go-version: 'oldstable'
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@v7
         with:
           distribution: goreleaser
           # 'latest', 'nightly', or a semver
