@@ -141,7 +141,7 @@ func parsePassword() (string, error) {
 // hash encodes and returns a stringified argon2 hash.
 func hash(cfg *config, password string) (string, error) {
 	cliPrintf(cfg,
-		"Generating argon2id hash with m=%d, t=%d, p=%d4...\n\n",
+		"Generating argon2id hash with m=%d, t=%d, p=%d...\n\n",
 		cfg.argon.MemoryCost,
 		cfg.argon.TimeCost,
 		cfg.argon.Parallelism,
