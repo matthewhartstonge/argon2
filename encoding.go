@@ -19,6 +19,7 @@ package argon2
 import (
 	"bytes"
 	"encoding/base64"
+	"math"
 	"strconv"
 )
 
@@ -146,7 +147,7 @@ func (p *parser) readRest() []byte {
 
 // appendBase64 works like a combination of base64.Encode() and append(),
 // while preventing additional allocations.
-func appendBase64(dst []byte, src []byte, encLen int) []byte {
+func appendBase64(dst, src []byte, encLen int) []byte {
 	l := len(dst)
 	c := cap(dst)
 
@@ -177,14 +178,14 @@ func appendBase64(dst []byte, src []byte, encLen int) []byte {
 var (
 	enc64 = base64.RawStdEncoding
 
-	decChunk1 = []byte("$argon2")
-	decChunk2 = []byte("v=")
-	decChunk3 = []byte("$m=")
-	decChunk4 = []byte(",t=")
-	decChunk5 = []byte(",p=")
-	encTypD   = []byte("d$v=")
-	encTypI   = []byte("i$v=")
-	encTypID  = []byte("id$v=")
+	decPrefix   = []byte("$argon2")
+	decVersion  = []byte("v=")
+	decMemory   = []byte("$m=")
+	decTime     = []byte(",t=")
+	decParallel = []byte(",p=")
+	encTypD     = []byte("d$v=")
+	encTypI     = []byte("i$v=")
+	encTypID    = []byte("id$v=")
 )
 
 // Encode turns a Raw struct into the official stringified/encoded argon2
@@ -216,14 +217,14 @@ func (raw *Raw) Encode() []byte {
 		encTyp = encTypID
 	}
 
-	buf = append(buf, decChunk1...)
+	buf = append(buf, decPrefix...)
 	buf = append(buf, encTyp...)
 	buf = strconv.AppendUint(buf, uint64(c.Version), 10)
-	buf = append(buf, decChunk3...)
+	buf = append(buf, decMemory...)
 	buf = strconv.AppendUint(buf, uint64(c.MemoryCost), 10)
-	buf = append(buf, decChunk4...)
+	buf = append(buf, decTime...)
 	buf = strconv.AppendUint(buf, uint64(c.TimeCost), 10)
-	buf = append(buf, decChunk5...)
+	buf = append(buf, decParallel...)
 	buf = strconv.AppendUint(buf, uint64(c.Parallelism), 10)
 	buf = append(buf, '$')
 	buf = appendBase64(buf, raw.Salt, saltLen64)
@@ -240,7 +241,7 @@ func (raw *Raw) Encode() []byte {
 func Decode(encoded []byte) (Raw, error) {
 	pa := &parser{buf: encoded}
 
-	if pa.check(decChunk1) != 0 {
+	if pa.check(decPrefix) != 0 {
 		return Raw{}, ErrIncorrectType
 	}
 
@@ -249,13 +250,13 @@ func Decode(encoded []byte) (Raw, error) {
 		return Raw{}, err
 	}
 
-	ok := pa.check(decChunk2)
+	ok := pa.check(decVersion)
 	v := pa.parseUint32()
-	ok |= pa.check(decChunk3)
+	ok |= pa.check(decMemory)
 	m := pa.parseUint32()
-	ok |= pa.check(decChunk4)
+	ok |= pa.check(decTime)
 	t := pa.parseUint32()
-	ok |= pa.check(decChunk5)
+	ok |= pa.check(decParallel)
 	p := pa.parseUint8()
 	pa.skipUntil('$')
 	s := pa.readSlice('$')
@@ -269,8 +270,7 @@ func Decode(encoded []byte) (Raw, error) {
 	hash := make([]byte, enc64.DecodedLen(len(h)))
 	sl, se := enc64.Decode(salt, s)
 	hl, he := enc64.Decode(hash, h)
-
-	if se != nil || he != nil {
+	if se != nil || he != nil || sl <= 0 || hl <= 0 || sl > math.MaxUint32 || hl > math.MaxUint32 {
 		return Raw{}, ErrDecodingFail
 	}
 

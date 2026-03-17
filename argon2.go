@@ -23,6 +23,7 @@ package argon2
 import (
 	"crypto/rand"
 	"crypto/subtle"
+
 	"golang.org/x/crypto/argon2"
 )
 
@@ -185,7 +186,7 @@ func MemoryConstrainedDefaults() Config {
 //
 // If salt is nil an appropriate salt of Config.SaltLength bytes is generated
 // for you.
-func (c *Config) Hash(pwd []byte, salt []byte) (Raw, error) {
+func (c *Config) Hash(pwd, salt []byte) (Raw, error) {
 	if pwd == nil {
 		return Raw{}, ErrPwdTooShort
 	}
@@ -193,7 +194,6 @@ func (c *Config) Hash(pwd []byte, salt []byte) (Raw, error) {
 	if salt == nil {
 		salt = make([]byte, c.SaltLength)
 		_, err := rand.Read(salt)
-
 		if err != nil {
 			return Raw{}, err
 		}
@@ -224,12 +224,12 @@ func (c *Config) HashRaw(pwd []byte) (Raw, error) {
 
 // HashEncoded is a helper function around Hash() which automatically
 // generates a salt and encodes the result for you.
-func (c *Config) HashEncoded(pwd []byte) (encoded []byte, err error) {
+func (c *Config) HashEncoded(pwd []byte) ([]byte, error) {
 	r, err := c.Hash(pwd, nil)
-	if err == nil {
-		encoded = r.Encode()
+	if err != nil {
+		return nil, err
 	}
-	return
+	return r.Encode(), nil
 }
 
 // Raw wraps a salt and hash pair including the Config with which it was
@@ -266,7 +266,7 @@ func (raw *Raw) Verify(pwd []byte) (bool, error) {
 // `argon2d` hash to verify the incoming password against.
 //
 // Refer: https://github.com/matthewhartstonge/argon2/issues/80#issuecomment-2679636640
-func VerifyEncoded(pwd []byte, encoded []byte) (bool, error) {
+func VerifyEncoded(pwd, encoded []byte) (bool, error) {
 	r, err := Decode(encoded)
 	if err != nil {
 		return false, err

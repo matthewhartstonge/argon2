@@ -17,8 +17,72 @@
 package argon2
 
 import (
+	"errors"
 	"testing"
 )
+
+func Test_Decode_Error(t *testing.T) {
+	tests := []struct {
+		name    string
+		input   string
+		wantErr error
+	}{
+		{
+			name:    "valid: argon2i hash",
+			input:   "$argon2i$v=19$m=16,t=2,p=1$MmpQV3BIRTVnOVZHOFBISQ$VDE34WMQOVG4X6Sqje0gkg",
+			wantErr: nil,
+		},
+		{
+			name:    "valid: argon2d hash",
+			input:   "$argon2d$v=19$m=16,t=2,p=1$MmpQV3BIRTVnOVZHOFBISQ$NyuqklQf+S+vzz3AtQCL8w",
+			wantErr: nil,
+		},
+		{
+			name:    "valid: argon2id hash",
+			input:   "$argon2id$v=19$m=16,t=2,p=1$MmpQV3BIRTVnOVZHOFBISQ$zirDUv1ZjLw0/layHCmWmQ",
+			wantErr: nil,
+		},
+		{
+			name:    "invalid hash",
+			input:   "$2y$10$B93GqMy3DNkIvyLbsxgtFOG2jwqvatQNUTeh3bPYvcCv9jiQgCO9S",
+			wantErr: ErrIncorrectType,
+		},
+		{
+			name:    "invalid hash mode",
+			input:   "$argon2e$v=19$m=65536,t=3,p=4$MmpQV3BIRTVnOVZHOFBISQ$zirDUv1ZjLw0/layHCmWmQ",
+			wantErr: ErrIncorrectType,
+		},
+		{
+			name:    "empty salt",
+			input:   "$argon2id$v=19$m=65536,t=3,p=4$$RdescudvJCsgt3ub+b+dWRWJTmaaJObG",
+			wantErr: ErrDecodingFail,
+		},
+		{
+			name:    "empty hash",
+			input:   "$argon2id$v=19$m=65536,t=3,p=4$c29tZXNhbHQ$",
+			wantErr: ErrDecodingFail,
+		},
+		{
+			name:    "invalid salt",
+			input:   "$argon2id$v=19$m=65536,t=3,p=4$!!invalid!!$RdescudvJCsgt3ub+b+dWRWJTmaaJObG",
+			wantErr: ErrDecodingFail,
+		},
+		{
+			name:    "invalid hash",
+			input:   "$argon2id$v=19$m=65536,t=3,p=4$c29tZXNhbHQ$!!invalid!!",
+			wantErr: ErrDecodingFail,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := Decode([]byte(tt.input))
+			if !errors.Is(err, tt.wantErr) {
+				t.Errorf("got %v, want %v", err, tt.wantErr)
+			}
+		})
+	}
+}
 
 func Test_parser_parseUint8(t *testing.T) {
 	type fields struct {
