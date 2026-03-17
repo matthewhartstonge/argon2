@@ -1,0 +1,34 @@
+version: "2"
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+formatters:
+  enable:
+    - goimports
+    - gofumpt
+    - gci
+  settings:
+    gci:
+      custom-order: true
+      sections:
+        - standard # Standard section: captures all standard packages.
+        - default # Default section: contains all imports that could not be matched to another section type.
+        - blank # Blank section: contains all blank imports. This section is not present unless explicitly enabled.
+        - prefix(github.com/matthewhartstonge/argon2) # Custom section: groups all imports with the specified Prefix.
+#        - alias # Alias section: contains all alias imports. This section is not present unless explicitly enabled.
+#        - dot # Dot section: contains all dot imports. This section is not present unless explicitly enabled.
+#        - localmodule # Local module section: contains all local packages. This section is not present unless explicitly enabled.
+
+    gofumpt:
+      extra-rules: true
+
+linters:
+  default: standard
+  enable:
+    - gosec
+    - staticcheck
+
+run:
+  timeout: 5m
