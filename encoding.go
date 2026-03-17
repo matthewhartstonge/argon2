@@ -19,6 +19,7 @@ package argon2
 import (
 	"bytes"
 	"encoding/base64"
+	"math"
 	"strconv"
 )
 
@@ -269,8 +270,7 @@ func Decode(encoded []byte) (Raw, error) {
 	hash := make([]byte, enc64.DecodedLen(len(h)))
 	sl, se := enc64.Decode(salt, s)
 	hl, he := enc64.Decode(hash, h)
-
-	if se != nil || he != nil {
+	if se != nil || he != nil || sl <= 0 || hl <= 0 || sl > math.MaxUint32 || hl > math.MaxUint32 {
 		return Raw{}, ErrDecodingFail
 	}
 
