@@ -146,7 +146,7 @@ func (p *parser) readRest() []byte {
 
 // appendBase64 works like a combination of base64.Encode() and append(),
 // while preventing additional allocations.
-func appendBase64(dst []byte, src []byte, encLen int) []byte {
+func appendBase64(dst, src []byte, encLen int) []byte {
 	l := len(dst)
 	c := cap(dst)
 
