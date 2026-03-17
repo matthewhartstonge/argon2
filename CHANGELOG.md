@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **cmd/argon2:** fixes cli parallelism print line. ([#126](https://github.com/matthewhartstonge/argon2/issues/126)) ([b08c0e9](https://github.com/matthewhartstonge/argon2/commit/b08c0e9f3fc9c265480d98849f49e7cf4f86eb6e))
 * **lint:** fixes gosec G115 - potential under/overflow on hash and salt length when calling `Decode`. Now returns `ErrDecodingFail`. ([7c659c8](https://github.com/matthewhartstonge/argon2/commit/7c659c8b35ed8ceecf97b8045c288c7dd32137c0))
 * **lint:** fixes gosec reported G115 on Decode ([a4d601c](https://github.com/matthewhartstonge/argon2/commit/a4d601c8280d4d5a6481b563ba1a4c385636637b))
+* **deps:** bump golang.org/x/crypto from 0.48.0 to 0.49.0 ([#123](https://github.com/matthewhartstonge/argon2/issues/123)) ([78c3433](https://github.com/matthewhartstonge/argon2/commit/78c34336ca1136e10ebc9fde1f3616ec91652e76))
 
 ## [1.4.6](https://github.com/matthewhartstonge/argon2/compare/v1.4.5...v1.4.6) (2026-02-13)
 
