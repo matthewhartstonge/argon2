@@ -29,13 +29,16 @@ jobs:
         uses: golangci/golangci-lint-action@v9.2.0
 
   test:
-    name: Test Go@v${{ matrix.go-version }}
+    name: Test Go@v${{ matrix.go-version }} (${{ matrix.go-arch }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
         go-version:
           - '1.25'
           - '1.26'
+        go-arch:
+          - '386'
+          - 'amd64'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
@@ -49,4 +52,6 @@ jobs:
         run: go mod download
 
       - name: Run Tests
+        env:
+          GOARCH: ${{ matrix.go-arch }}
         run: go test ./...
