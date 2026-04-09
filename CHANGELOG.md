@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.2](https://github.com/matthewhartstonge/argon2/compare/v1.5.1...v1.5.2) (2026-04-09)
+
+
+### Bug Fixes
+
+* **deps:** bump golang.org/x/crypto from 0.49.0 to 0.50.0 ([#131](https://github.com/matthewhartstonge/argon2/issues/131)) ([c6096ae](https://github.com/matthewhartstonge/argon2/commit/c6096ae2dcb7067e9526eb1523d0f205cb365386))
+
 ## [1.5.1](https://github.com/matthewhartstonge/argon2/compare/v1.5.0...v1.5.1) (2026-04-07)
 
 
