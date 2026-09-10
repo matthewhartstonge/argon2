@@ -51,7 +51,8 @@ changelog:
       - "^test:"
 
 release:
-  mode: keep-existing
+  mode: replace
+  draft: true
   footer: >-
 
     ---
