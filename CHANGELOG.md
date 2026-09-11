@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.2](https://github.com/matthewhartstonge/argon2/compare/v1.6.1...v1.6.2) (2026-09-11)
+
+
+### CI
+
+* **actions:** migrates to sha versioned github actions. ([dd1d95c](https://github.com/matthewhartstonge/argon2/commit/dd1d95cc0b070ddececc45cb4fcdb5b3861e8677))
+* **release-please:** migrates release-please gha token to a github app token to enable downstream github actions to kickoff (goreleaser). ([1a3efe6](https://github.com/matthewhartstonge/argon2/commit/1a3efe66ce0b02b2dc43bfc70222360f8aedb1c0))
+
 ## [1.6.1](https://github.com/matthewhartstonge/argon2/compare/v1.6.0...v1.6.1) (2026-09-11)
 
 
