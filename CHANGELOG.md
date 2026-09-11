@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1](https://github.com/matthewhartstonge/argon2/compare/v1.6.0...v1.6.1) (2026-09-11)
+
+
+### CI
+
+* **goreleaser:** split workflow responsibility, forces tag creation on draft release to enable goreleaser to pick up the inflight release. ([#153](https://github.com/matthewhartstonge/argon2/issues/153)) ([5910aea](https://github.com/matthewhartstonge/argon2/commit/5910aea3fb4bed59b1fd4acfc91a880ce57a77cb))
+
 ## [1.6.0](https://github.com/matthewhartstonge/argon2/compare/v1.5.7...v1.6.0) (2026-09-10)
 
 
