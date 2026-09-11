@@ -1,5 +1,5 @@
 {
-  "bootstrap-sha": "6284bf5378dc340bb42da47b1b22c2b965badab9",
+  "bootstrap-sha": "7d1f6f0a9ccc397f4d65e4ac8ad7ba6c899e093e",
   "packages": {
     ".": {
       "changelog-path": "CHANGELOG.md",
@@ -7,6 +7,7 @@
       "bump-minor-pre-major": false,
       "bump-patch-for-minor-pre-major": false,
       "draft": true,
+      "force-tag-creation": true,
       "prerelease": false,
       "extra-files": [
         "cmd/argon2/main.go"
