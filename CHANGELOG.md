@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0](https://github.com/matthewhartstonge/argon2/compare/v1.5.7...v1.6.0) (2026-09-10)
+
+
+### Features
+
+* **deps:** upgrades to go@1.26.0. ([#150](https://github.com/matthewhartstonge/argon2/issues/150)) ([4edf827](https://github.com/matthewhartstonge/argon2/commit/4edf827ca357890a61c914489f88b61f6c5d5cac))
+
+
+### Bug Fixes
+
+* **deps:** bump golang.org/x/crypto from 0.55.0 to 0.56.0 ([#148](https://github.com/matthewhartstonge/argon2/issues/148)) ([1dc64d8](https://github.com/matthewhartstonge/argon2/commit/1dc64d8aa900becd4c806cedb38e04d8eb341c27))
+
+
+### CI
+
+* **goreleaser:** enables release publishing. ([b0f7e35](https://github.com/matthewhartstonge/argon2/commit/b0f7e35dc815111ed133b88ffce5bc4b82bb5ade))
+* **release-please:** configures changelog sections. ([9c48acc](https://github.com/matthewhartstonge/argon2/commit/9c48acc502ee9190ec03bbf8d7642719aa282846))
+* **release-please:** moves to draft releases, to enable go-releaser publishing. ([267d498](https://github.com/matthewhartstonge/argon2/commit/267d4981385091e37e346abc2b564c7afb728d68))
+
 ## [1.5.7](https://github.com/matthewhartstonge/argon2/compare/v1.5.6...v1.5.7) (2026-08-15)
 
 
