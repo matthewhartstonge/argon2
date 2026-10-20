@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.5](https://github.com/matthewhartstonge/argon2/compare/v1.6.4...v1.6.5) (2026-10-20)
+
+
+### Build System
+
+* **deps:** bump actions/create-github-app-token from 3.2.0 to 3.3.0 ([#161](https://github.com/matthewhartstonge/argon2/issues/161)) ([661b78b](https://github.com/matthewhartstonge/argon2/commit/661b78b07c6c6bb16bb937fcb4d63f513cbbae6c))
+* **deps:** bump goreleaser/goreleaser-action from 7.2.3 to 7.3.0 ([#162](https://github.com/matthewhartstonge/argon2/issues/162)) ([35af44f](https://github.com/matthewhartstonge/argon2/commit/35af44f128a56b88faf35f94db1226379ade730a))
+
 ## [1.6.4](https://github.com/matthewhartstonge/argon2/compare/v1.6.3...v1.6.4) (2026-10-14)
 
 
